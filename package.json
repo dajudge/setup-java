@@ -9,7 +9,7 @@
     "node": ">=24.0.0"
   },
   "scripts": {
-    "build": "node scripts/patch-is-unsafe.mjs && ncc build -o dist/setup src/setup-java.ts && ncc build -o dist/cleanup src/cleanup-java.ts",
+    "build": "node scripts/patch-is-unsafe.mjs && node scripts/patch-http-client-timeout.mjs && ncc build -o dist/setup src/setup-java.ts && ncc build -o dist/cleanup src/cleanup-java.ts",
     "format": "prettier --no-error-on-unmatched-pattern --write \"**/*.{ts,yml,yaml}\"",
     "format-check": "prettier --no-error-on-unmatched-pattern --check \"**/*.{ts,yml,yaml}\"",
     "lint": "eslint \"**/*.ts\"",
@@ -19,6 +19,7 @@
     "prepare": "husky install",
     "prerelease": "npm run-script build",
     "release": "git add -f dist/setup/*.js dist/setup/package.json dist/cleanup/*.js",
+    "pretest": "node scripts/patch-http-client-timeout.mjs",
     "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --runInBand --coverage"
   },
   "lint-staged": {
@@ -42,34 +43,34 @@
   "author": "GitHub",
   "license": "MIT",
   "dependencies": {
-    "@actions/cache": "^6.2.0",
+    "@actions/cache": "^6.3.0",
     "@actions/core": "^3.0.1",
     "@actions/exec": "^3.0.0",
     "@actions/glob": "^0.7.0",
     "@actions/http-client": "^4.0.1",
     "@actions/io": "^3.0.2",
     "@actions/tool-cache": "^4.0.0",
-    "fast-xml-parser": "^5.11.1",
+    "fast-xml-parser": "^5.11.2",
     "semver": "^7.8.5"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@jest/globals": "^30.5.2",
-    "@types/node": "^26.6.2",
+    "@types/node": "^26.6.5",
     "@types/semver": "^7.8.0",
-    "@typescript-eslint/eslint-plugin": "^8.70.1",
+    "@typescript-eslint/eslint-plugin": "^8.72.0",
     "@typescript-eslint/parser": "^8.65.0",
     "@vercel/ncc": "^0.45.0",
-    "eslint": "^10.11.0",
+    "eslint": "^10.13.0",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-jest": "^29.16.6",
-    "eslint-plugin-n": "^18.3.0",
-    "globals": "^17.12.0",
+    "eslint-plugin-jest": "^29.17.0",
+    "eslint-plugin-n": "^18.5.0",
+    "globals": "^17.13.0",
     "husky": "^9.1.7",
     "jest": "^30.5.2",
-    "lint-staged": "^17.5.1",
-    "prettier": "^3.9.9",
-    "ts-jest": "^29.4.13",
+    "lint-staged": "^17.6.0",
+    "prettier": "^3.9.10",
+    "ts-jest": "^29.4.15",
     "typescript": "^6.0.3"
   },
   "bugs": {
